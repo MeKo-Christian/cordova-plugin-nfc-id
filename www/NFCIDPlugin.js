@@ -2,7 +2,7 @@ var exec = require("cordova/exec");
 
 var NFCPlugin = {
   readNFC: function (success, error) {
-    exec(success, error, "NFCPlugin", "readNFC", []);
+    exec(success, error, "NFCIDPlugin", "readNFC", []);
   },
 };
 
