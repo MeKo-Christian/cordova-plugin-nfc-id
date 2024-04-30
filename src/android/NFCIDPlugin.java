@@ -29,8 +29,11 @@ public class NFCIDPlugin extends CordovaPlugin {
     Intent intent = new Intent(cordova.getActivity(), cordova.getActivity().getClass())
         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+    int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+
+    // Check if the Android version is 12 or above
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-      flags |= PendingIntent.FLAG_IMMUTABLE; // Add FLAG_IMMUTABLE for Android 12 and above
+      flags |= PendingIntent.FLAG_IMMUTABLE;
     }
 
     pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, intent, flags);
