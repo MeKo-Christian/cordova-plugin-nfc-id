@@ -9,14 +9,14 @@
             <uses-permission android:name="android.permission.NFC" />
             <uses-feature android:name="android.hardware.nfc" android:required="true" />
         </config-file>
-        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity[@android:name='MainActivity']">
             <activity android:name="MainActivity">
                 <intent-filter>
                     <action android:name="android.nfc.action.TAG_DISCOVERED" />
                     <category android:name="android.intent.category.DEFAULT" />
                 </intent-filter>
             </activity>
-        </config-file>
+        </edit-config>
         <source-file src="src/android/NFCIDPlugin.java" target-dir="src/de/meko/nfc/id" />
     </platform>
 </plugin>

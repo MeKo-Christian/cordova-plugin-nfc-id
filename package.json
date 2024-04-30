@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-nfc-id",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Cordova plugin for reading NFC tags",
   "cordova": {
     "id": "de.meko.nfc.id",
