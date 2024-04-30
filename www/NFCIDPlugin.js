@@ -7,3 +7,11 @@ var NFCIDPlugin = {
 };
 
 module.exports = NFCIDPlugin;
+
+// Make plugin work under window.plugins
+if (!window.plugins) {
+  window.plugins = {};
+}
+if (!window.plugins.intent) {
+  window.plugins.nfcid = NFCIDPlugin;
+}
