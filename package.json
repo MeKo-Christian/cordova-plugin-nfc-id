@@ -1,0 +1,36 @@
+{
+  "name": "cordova-plugin-nfc-id",
+  "version": "1.0.0",
+  "description": "A Cordova plugin for reading NFC tags",
+  "cordova": {
+    "id": "cordova-plugin-nfc-id",
+    "platforms": ["android"]
+  },
+  "keywords": [
+    "cordova",
+    "nfc",
+    "id"
+  ],
+  "author": "Christian-W. Budde",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MeKo-Christian/cordova-plugin-nfc-id.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MeKo-Christian/cordova-plugin-nfc-id/issues"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "12.0.0": {
+        "cordova": ">=12.0.0"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "www",
+    "plugin.xml"
+  ],
+  "main": "www/nfcIdPlugin.js"
+}
