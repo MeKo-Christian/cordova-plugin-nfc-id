@@ -1,4 +1,4 @@
-# NFCPlugin for Cordova
+# NFC-ID-Plugin for Cordova
 
 This plugin enables Cordova applications to read the ID of NFC tags on Android devices. It provides a simple interface for capturing the NFC tag ID, allowing React-based Cordova apps to utilize NFC technology easily.
 
@@ -25,7 +25,7 @@ To use the plugin in your Cordova project, follow these steps:
 
 ```javascript
 document.addEventListener('deviceready', function() {
-    cordova.plugins.NFCPlugin.readNFC(
+    cordova.plugins.NFCIDPlugin.readNFC(
         function(result) {
             console.log('NFC Tag ID:', result);
         },

@@ -19,7 +19,7 @@ function setupNFC() {
 }
 
 function readNFC() {
-  cordova.plugins.NFCPlugin.readNFC(
+  cordova.plugins.NFCIDPlugin.readNFC(
     function (nfcId) {
       console.log("NFC ID: " + nfcId);
       document.getElementById("nfcId").textContent = "NFC ID: " + nfcId;
