@@ -12,9 +12,11 @@ import android.app.PendingIntent;
 public class NFCIDPlugin extends CordovaPlugin {
   private NfcAdapter nfcAdapter;
   private PendingIntent pendingIntent;
+  private CallbackContext callbackContext; // Declare callbackContext here
 
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    this.callbackContext = callbackContext; // Assign callbackContext from method parameter to class member
     if (action.equals("readNFC")) {
       initNFC(); // Ensure NFC is initialized
       return true;
@@ -31,7 +33,7 @@ public class NFCIDPlugin extends CordovaPlugin {
     if (nfcAdapter != null && nfcAdapter.isEnabled()) {
       nfcAdapter.enableForegroundDispatch(cordova.getActivity(), pendingIntent, null, null);
     } else {
-      callbackContext.error("NFC is not available or enabled.");
+      callbackContext.error("NFC is not available or enabled."); // Correct usage of callbackContext
     }
   }
 
@@ -48,7 +50,7 @@ public class NFCIDPlugin extends CordovaPlugin {
     Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
     if (tag != null) {
       byte[] id = tag.getId();
-      callbackContext.success(bytesToHexString(id));
+      callbackContext.success(bytesToHexString(id)); // Correct usage of callbackContext
     }
   }
 
