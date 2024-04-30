@@ -9,7 +9,7 @@ import android.nfc.Tag;
 import android.content.Intent;
 import android.app.PendingIntent;
 
-public class NFCPlugin extends CordovaPlugin {
+public class NFCIDPlugin extends CordovaPlugin {
   private NfcAdapter nfcAdapter;
   private PendingIntent pendingIntent;
 
