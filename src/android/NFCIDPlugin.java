@@ -1,4 +1,4 @@
-package com.cordova.plugin.NFCIDPlugin;
+package de.meko.nfc.id;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
