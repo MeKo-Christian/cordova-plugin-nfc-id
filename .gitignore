@@ -37,3 +37,6 @@ node_modules/
 
 example/platforms/
 example/plugins/
+
+# npm publish files
+*.tgz
