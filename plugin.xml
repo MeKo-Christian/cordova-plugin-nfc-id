@@ -5,11 +5,18 @@
         <clobbers target="cordova.plugins.NFCIDPlugin" />
     </js-module>
     <platform name="android">
-        <config-file parent="/*" target="res/xml/config.xml">
-            <feature name="NFCIDPlugin">
-                <param name="android-package" value="de.meko.nfc.id" />
-            </feature>
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.NFC" />
+            <uses-feature android:name="android.hardware.nfc" android:required="true" />
         </config-file>
-        <source-file src="src/android/NFCIDPlugin.java" target-dir="src/your/package/name" />
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <activity android:name="MainActivity">
+                <intent-filter>
+                    <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+        </config-file>
+        <source-file src="src/android/NFCIDPlugin.java" target-dir="src/de/meko/nfc/id" />
     </platform>
 </plugin>
