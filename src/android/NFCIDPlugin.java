@@ -28,7 +28,12 @@ public class NFCIDPlugin extends CordovaPlugin {
     nfcAdapter = NfcAdapter.getDefaultAdapter(cordova.getActivity());
     Intent intent = new Intent(cordova.getActivity(), cordova.getActivity().getClass())
         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, intent, 0);
+
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+      flags |= PendingIntent.FLAG_IMMUTABLE; // Add FLAG_IMMUTABLE for Android 12 and above
+    }
+
+    pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, intent, flags);
 
     if (nfcAdapter != null && nfcAdapter.isEnabled()) {
       nfcAdapter.enableForegroundDispatch(cordova.getActivity(), pendingIntent, null, null);
