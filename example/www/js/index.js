@@ -3,26 +3,26 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-    console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
-    document.getElementById("deviceready").classList.add("ready");
+  console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
+  document.getElementById("deviceready").classList.add("ready");
 
-    // Register for NFC reading immediately
-    registerNFC();
+  // Register for NFC reading immediately
+  registerNFC();
 }
 
 function registerNFC() {
-    cordova.plugins.nfcid.registerNFC(
-        function () {
-            console.log("NFC read registration successful");
-        },
-        function (error) {
-            console.error("Error registering for NFC reads:", error);
-        }
-    );
+  window.plugins.nfcid.registerNFC(
+    function (tagId) {
+      console.log("NFC Tag ID:", tagId);
+    },
+    function (error) {
+      console.error("Error reading NFC tag:", error);
+    }
+  );
 
-    // Listen for NFC tags being read
-    document.addEventListener('nfcTagRead', function (event) {
-        console.log("NFC Tag Read:", event.tagId);
-        document.getElementById("nfcId").textContent = "NFC ID: " + event.tagId;
-    });
+  // Listen for NFC tags being read
+  document.addEventListener('nfcTagRead', function (event) {
+    console.log("NFC Tag Read:", event.tagId);
+    document.getElementById("nfcId").textContent = "NFC ID: " + event.tagId;
+  });
 }

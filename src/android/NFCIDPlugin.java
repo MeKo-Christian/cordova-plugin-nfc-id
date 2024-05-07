@@ -17,20 +17,10 @@ public class NFCIDPlugin extends CordovaPlugin {
     @Override
     public void pluginInitialize() {
         super.pluginInitialize();
-        initNFC();
+        setupNFC();
     }
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("registerNFC".equals(action)) {
-            this.nfcCallbackContext = callbackContext; // Save the callback context to use for later
-            registerNFC(); // Ensure NFC is initialized and setup to read tags
-            return true;
-        }
-        return false;
-    }
-
-    private void initNFC() {
+    private void setupNFC() {
         nfcAdapter = NfcAdapter.getDefaultAdapter(cordova.getActivity());
         Intent intent = new Intent(cordova.getActivity(), cordova.getActivity().getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         int flags = PendingIntent.FLAG_UPDATE_CURRENT;
@@ -39,20 +29,21 @@ public class NFCIDPlugin extends CordovaPlugin {
         }
         pendingIntent = PendingIntent.getActivity(cordova.getActivity(), 0, intent, flags);
 
-        if (nfcAdapter == null || !nfcAdapter.isEnabled()) {
-            LOG.e("NFCIDPlugin", "NFC is not available or enabled.");
+        if (nfcAdapter == null) {
+            LOG.e("NFCIDPlugin", "NFC is not available.");
         }
     }
 
-    private void registerNFC() {
-        if (nfcAdapter != null && pendingIntent != null) {
-            nfcAdapter.enableForegroundDispatch(cordova.getActivity(), pendingIntent, null, null);
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if ("registerNFC".equals(action)) {
+            this.nfcCallbackContext = callbackContext;
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
             result.setKeepCallback(true);
-            nfcCallbackContext.sendPluginResult(result);
-        } else {
-            nfcCallbackContext.error("NFC is not available or enabled.");
+            callbackContext.sendPluginResult(result);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -61,7 +52,10 @@ public class NFCIDPlugin extends CordovaPlugin {
         if (nfcAdapter != null && pendingIntent != null) {
             nfcAdapter.enableForegroundDispatch(cordova.getActivity(), pendingIntent, null, null);
         }
-        handleIntent(cordova.getActivity().getIntent());
+        Intent intent = cordova.getActivity().getIntent();
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+            handleIntent(intent);
+        }
     }
 
     @Override
@@ -72,20 +66,27 @@ public class NFCIDPlugin extends CordovaPlugin {
         }
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
     private void handleIntent(Intent intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if (tag != null) {
                 String tagId = bytesToHexString(tag.getId());
-                sendEventToJavaScript(tagId);
+                sendTagIdToJavaScript(tagId);
             }
         }
     }
 
-    private void sendEventToJavaScript(String tagId) {
-        PluginResult result = new PluginResult(PluginResult.Status.OK, tagId);
-        result.setKeepCallback(true);
-        nfcCallbackContext.sendPluginResult(result);
+    private void sendTagIdToJavaScript(String tagId) {
+        if (nfcCallbackContext != null) {
+            PluginResult result = new PluginResult(PluginResult.Status.OK, tagId);
+            result.setKeepCallback(true);
+            nfcCallbackContext.sendPluginResult(result);
+        }
     }
 
     private String bytesToHexString(byte[] bytes) {
