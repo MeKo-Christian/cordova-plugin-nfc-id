@@ -11,18 +11,13 @@ function onDeviceReady() {
 }
 
 function registerNFC() {
+  console.log("Registering for NFC reads");
   window.plugins.nfcid.registerNFC(
     function (tagId) {
-      console.log("NFC Tag ID:", tagId);
+      document.getElementById("nfcId").textContent = "NFC ID: " + tagId;
     },
     function (error) {
       console.error("Error reading NFC tag:", error);
     }
   );
-
-  // Listen for NFC tags being read
-  document.addEventListener('nfcTagRead', function (event) {
-    console.log("NFC Tag Read:", event.tagId);
-    document.getElementById("nfcId").textContent = "NFC ID: " + event.tagId;
-  });
 }
