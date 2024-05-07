@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    ...
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cordova NFC ID example</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
   </head>
   <body>
     <div class="app">
-      <h1>Apache Cordova</h1>
-      <div id="deviceready" class="blink">
-        <p class="event listening">Connecting to Device</p>
-        <p class="event received">Device is Ready</p>
-      </div>
-      <p id="nfcId">NFC ID will appear here</p>
-      <button id="readNfc">Read NFC</button>
+        <h1>Apache Cordova</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+        <p id="nfcId">NFC ID will appear here when detected</p>
     </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-  </body>
+</body>
 </html>

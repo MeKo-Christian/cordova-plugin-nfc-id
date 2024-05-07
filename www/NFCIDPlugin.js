@@ -1,17 +1,17 @@
 var exec = require("cordova/exec");
 
 var NFCIDPlugin = {
-  readNFC: function (success, error) {
-    exec(success, error, "NFCIDPlugin", "readNFC", []);
-  },
+  // Function to register for NFC reads
+  registerNFC: function (success, error) {
+    exec(success, error, "NFCIDPlugin", "registerNFC", []);
+  }
 };
 
+// Export the plugin object
 module.exports = NFCIDPlugin;
 
-// Make plugin work under window.plugins
+// Ensure it's accessible under window.plugins
 if (!window.plugins) {
   window.plugins = {};
 }
-if (!window.plugins.intent) {
-  window.plugins.nfcid = NFCIDPlugin;
-}
+window.plugins.nfcid = NFCIDPlugin;

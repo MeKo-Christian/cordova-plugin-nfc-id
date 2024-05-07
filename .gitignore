@@ -40,3 +40,6 @@ example/plugins/
 
 # npm publish files
 *.tgz
+
+#custom files
+setLegacyEnv.bat

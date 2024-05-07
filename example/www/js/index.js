@@ -3,30 +3,26 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-  // Cordova is now initialized. Have fun!
-  console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
-  document.getElementById("deviceready").classList.add("ready");
+    console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
+    document.getElementById("deviceready").classList.add("ready");
 
-  // Setup NFC reading
-  setupNFC();
+    // Register for NFC reading immediately
+    registerNFC();
 }
 
-function setupNFC() {
-  // Add event listener for the NFC read button
-  document.getElementById("readNfc").addEventListener("click", function () {
-    readNFC();
-  });
-}
+function registerNFC() {
+    cordova.plugins.nfcid.registerNFC(
+        function () {
+            console.log("NFC read registration successful");
+        },
+        function (error) {
+            console.error("Error registering for NFC reads:", error);
+        }
+    );
 
-function readNFC() {
-  cordova.plugins.NFCIDPlugin.readNFC(
-    function (nfcId) {
-      console.log("NFC ID: " + nfcId);
-      document.getElementById("nfcId").textContent = "NFC ID: " + nfcId;
-    },
-    function (error) {
-      console.error("NFC reading failed: " + error);
-      document.getElementById("nfcId").textContent = "Error: " + error;
-    }
-  );
+    // Listen for NFC tags being read
+    document.addEventListener('nfcTagRead', function (event) {
+        console.log("NFC Tag Read:", event.tagId);
+        document.getElementById("nfcId").textContent = "NFC ID: " + event.tagId;
+    });
 }
